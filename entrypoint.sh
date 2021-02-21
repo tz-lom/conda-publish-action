@@ -25,8 +25,7 @@ check_if_meta_yaml_file_exists() {
 
 build_package(){
     # Build for Linux
-    echo "$INPUT_CHANNELS"
-    conda build -c conda-forge -c bcilab --output-folder . .
+    conda build `echo "$INPUT_CHANNELS" | sed 's/\([^ ]\+\)/-c \1/g'` --output-folder . .
 
     # Convert to other platforms: OSX, WIN
     if [[ $INPUT_PLATFORMS == *"osx"* ]]; then
