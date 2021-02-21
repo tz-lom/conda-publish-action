@@ -3,7 +3,7 @@ ENV PATH="/root/miniconda3/bin:${PATH}"
 ARG PATH="/root/miniconda3/bin:${PATH}"
 RUN apt-get update
 
-RUN apt-get install -y wget && rm -rf /var/lib/apt/lists/*
+RUN apt-get install -y wget git && rm -rf /var/lib/apt/lists/*
 
 # install miniconda
 RUN wget \
