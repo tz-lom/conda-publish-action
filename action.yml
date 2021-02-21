@@ -13,6 +13,9 @@ inputs:
   platforms:
     description: 'Platforms to publish [osx/linux/win]'
     default: 'win osx linux'
+  channels:
+    description: 'Extra channels to fetch packages'
+    default: 'conda-forge'
 runs:
   using: 'docker'
   image: 'Dockerfile'
