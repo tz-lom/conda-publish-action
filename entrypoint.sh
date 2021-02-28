@@ -29,25 +29,30 @@ build_package(){
     export GIT_BUILD_NUMBER=$(git rev-list  `git rev-list --tags --no-walk --max-count=1`..HEAD --count)
     conda build `echo "$INPUT_CHANNELS" | sed 's/\([^ ]\+\)/-c \1/g'` --output-folder . .
 
+    if [[ $INPUT_PLATFORMS == *"linux"* ]]; then
+    conda convert -p linux-32 linux-64/*.tar.bz2
+    fi
+
     # Convert to other platforms: OSX, WIN
     if [[ $INPUT_PLATFORMS == *"osx"* ]]; then
     conda convert -p osx-64 linux-64/*.tar.bz2
     fi
     if [[ $INPUT_PLATFORMS == *"win"* ]]; then
     conda convert -p win-64 linux-64/*.tar.bz2
+    conda convert -p win-32 linux-64/*.tar.bz2
     fi
 }
 
 upload_package(){
     export ANACONDA_API_TOKEN=$INPUT_ANACONDATOKEN
     if [[ $INPUT_PLATFORMS == *"osx"* ]]; then
-    anaconda upload -c $INPUT_TARGET_CHANNEL osx-64/*.tar.bz2
+    anaconda upload -c $INPUT_TARGET_CHANNEL osx-*/*.tar.bz2
     fi
     if [[ $INPUT_PLATFORMS == *"linux"* ]]; then
-    anaconda upload -c $INPUT_TARGET_CHANNEL linux-64/*.tar.bz2
+    anaconda upload -c $INPUT_TARGET_CHANNEL linux-*/*.tar.bz2
     fi
     if [[ $INPUT_PLATFORMS == *"win"* ]]; then
-    anaconda upload -c $INPUT_TARGET_CHANNEL win-64/*.tar.bz2
+    anaconda upload -c $INPUT_TARGET_CHANNEL win-*/*.tar.bz2
     fi
 }
 
