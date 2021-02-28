@@ -25,6 +25,8 @@ check_if_meta_yaml_file_exists() {
 
 build_package(){
     # Build for Linux
+    export GIT_VERSION=$(git describe --tags --abbrev=0)
+    export GIT_BUILD_NUMBER=$(git rev-list  `git rev-list --tags --no-walk --max-count=1`..HEAD --count)
     conda build `echo "$INPUT_CHANNELS" | sed 's/\([^ ]\+\)/-c \1/g'` --output-folder . .
 
     # Convert to other platforms: OSX, WIN
