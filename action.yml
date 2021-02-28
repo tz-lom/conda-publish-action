@@ -16,6 +16,9 @@ inputs:
   channels:
     description: 'Extra channels to fetch packages'
     default: 'conda-forge'
+  target_channel:
+    description: 'Channel where to upload the package'
+    default: ''
 runs:
   using: 'docker'
   image: 'Dockerfile'
