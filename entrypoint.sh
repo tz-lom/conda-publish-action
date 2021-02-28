@@ -44,15 +44,14 @@ build_package(){
 }
 
 upload_package(){
-    export ANACONDA_API_TOKEN=$INPUT_ANACONDATOKEN
     if [[ $INPUT_PLATFORMS == *"osx"* ]]; then
-    anaconda upload -u $INPUT_TARGET_CHANNEL osx-*/*.tar.bz2
+    anaconda --token "$INPUT_ANACONDATOKEN" upload -u $INPUT_TARGET_CHANNEL osx-*/*.tar.bz2
     fi
     if [[ $INPUT_PLATFORMS == *"linux"* ]]; then
-    anaconda upload -u $INPUT_TARGET_CHANNEL linux-*/*.tar.bz2
+    anaconda --token "$INPUT_ANACONDATOKEN" upload -u $INPUT_TARGET_CHANNEL linux-*/*.tar.bz2
     fi
     if [[ $INPUT_PLATFORMS == *"win"* ]]; then
-    anaconda upload -u $INPUT_TARGET_CHANNEL win-*/*.tar.bz2
+    anaconda --token "$INPUT_ANACONDATOKEN" upload -u $INPUT_TARGET_CHANNEL win-*/*.tar.bz2
     fi
 }
 
